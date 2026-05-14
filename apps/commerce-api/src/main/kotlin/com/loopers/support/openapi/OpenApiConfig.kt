@@ -1,6 +1,7 @@
 package com.loopers.support.openapi
 
 import com.loopers.support.auth.AuthenticationInterceptor
+import com.loopers.support.auth.CurrentUser
 import com.loopers.support.auth.LoginRequired
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
@@ -8,12 +9,17 @@ import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.security.SecurityScheme
 import org.springdoc.core.customizers.OperationCustomizer
+import org.springdoc.core.utils.SpringDocUtils
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.method.HandlerMethod
 
 @Configuration
 class OpenApiConfig {
+    init {
+        SpringDocUtils.getConfig().addAnnotationsToIgnore(CurrentUser::class.java)
+    }
+
     @Bean
     fun openApi(): OpenAPI =
         OpenAPI()
